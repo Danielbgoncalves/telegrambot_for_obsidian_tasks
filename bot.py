@@ -17,16 +17,16 @@ bot = telebot.TeleBot(KEY)
 
 @bot.message_handler(['start'])
 def start(msg: telebot.types.Message):
-    bot.reply_to(msg, 'Olá, tudo bem ?')
+    orientacao = '''
+    Exemplo de mensagem válida:
+        /obsidian Representação GAF com Dimensão Fractal | 
+        #representacao #task | AAAA-MM-DD | 
+        Estudar GAF, Fazer resumo explicativo, 
+        Implementar algoritmo, Fazer pipeline de geração das 
+        imagens
+        '''
+    bot.send_message(msg, orientacao)
 
-@bot.message_handler(['oi'])
-def oi(msg: telebot.types.Message):
-    bot.reply_to(msg, 'oi para você!')
-
-@bot.message_handler(['debug'])
-def debug(msg: telebot.types.Message):
-    print(msg)
-    bot.reply_to(msg, 'printado')
 
 '''
 Exemplo de mensagem válida:
