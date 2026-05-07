@@ -25,17 +25,7 @@ def start(msg: telebot.types.Message):
         Implementar algoritmo, Fazer pipeline de geração das 
         imagens
         '''
-    bot.send_message(msg, orientacao)
-
-
-'''
-Exemplo de mensagem válida:
-/obsidian Representação GAF com Dimensão Fractal | 
-    #representação #task | 2026-05-30 | 
-    Estudar GAF, Fazer resumo explicativo, 
-    Implementar algoritmo, Fazer pipeline de geração das 
-    imagens
-'''
+    bot.send_message(MY_ID, orientacao)
 
 @bot.message_handler(commands=['obsidian'])
 def obsidian(msg: telebot.types.Message):
@@ -105,5 +95,21 @@ def obsidian(msg: telebot.types.Message):
         erro_msg = f"Erro: {e}\n Uso correto:/task Título | #tag | AAAA-MM-DD | sub1, sub2"
         bot.reply_to(msg, erro_msg)
 
+# bot.infinity_polling()
 
-bot.infinity_polling()
+def save_updates():
+    updates = bot.get_updates()
+
+    if not updates:
+        return
+    
+    for update in updates:
+        if update.message:
+            obsidian(update.message)
+            bot.get_updates(offset=(update.update_id + 1))
+    
+    bot.send_message(MY_ID, "PC Online: Todas as tarefas pendentes foram sincronizadas com o Obsidian.")
+
+if __name__ == '__main__':
+    save_updates()
+            
